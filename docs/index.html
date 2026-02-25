@@ -229,6 +229,24 @@
     }
     .placeholder-box a { color: #6c5ce7; text-decoration: none; }
     .placeholder-box a:hover { text-decoration: underline; }
+    .ticket-block {
+      background: #16162a;
+      border: 1px solid #2a2a3d;
+      border-radius: 8px;
+      padding: 14px 18px;
+      margin-bottom: 12px;
+      font-size: 13px;
+      line-height: 1.5;
+    }
+    .ticket-block .ticket-meta { font-size: 11px; color: #6c5ce7; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px; }
+    .ticket-block .ticket-label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.5px; color: #666; margin-bottom: 4px; margin-top: 10px; }
+    .ticket-block .ticket-title { font-weight: 700; color: #fff; font-size: 14px; margin-bottom: 8px; }
+    .ticket-block .ticket-desc { color: #b0b0b0; white-space: pre-wrap; }
+    .ticket-block .ticket-accept { color: #888; font-size: 12px; border-left: 3px solid #2a2a3d; padding-left: 10px; margin-top: 8px; }
+    .ticket-block code { background: #2a2a3d; padding: 1px 6px; border-radius: 4px; color: #fdcb6e; font-size: 12px; }
+    .prd-phase-head { font-size: 16px; font-weight: 700; color: #fff; margin: 24px 0 12px; padding-bottom: 6px; border-bottom: 1px solid #2a2a3d; }
+    .tpl-inline { background: #0f0f1a; border: 1px solid #2a2a3d; border-radius: 8px; padding: 12px 16px; margin-top: 8px; font-size: 12px; color: #ccc; line-height: 1.6; }
+    .tpl-inline strong { color: #fdcb6e; }
   </style>
 </head>
 <body>
@@ -347,19 +365,86 @@
       </tbody>
     </table>
 
-    <div class="prd-section-title">2. Full PRD tickets (rewritten)</div>
-    <p class="prd-intro">All Phase 1 and Phase 2 tickets with Title, Description, Acceptance, and template details are in the following docs. No external data — static content only.</p>
-    <div class="doc-cards">
-      <a href="PADHAI_PRD_TICKETS_REWRITTEN.md" class="doc-card">
-        <h3>PadhAI UPSC — PRD tickets (rewritten)</h3>
-        <p>Complete notification and paywall tickets: Payment Failure, Success, Expiry, Cancellation, <strong>Trial Activated for 7 days</strong>, Win-Back, Weekly to Annual, Long-Term Win-Back, Feature Paywall. Template names, copy, and registration order.</p>
-        <span class="doc-link">Open PADHAI_PRD_TICKETS_REWRITTEN.md →</span>
-      </a>
-      <a href="PRD_TICKETS_REWRITTEN.md" class="doc-card">
-        <h3>PRD tickets (rewritten)</h3>
-        <p>Alternate PRD ticket document. Same structure: Title, Description, Acceptance. Use for Linear or your tracker.</p>
-        <span class="doc-link">Open PRD_TICKETS_REWRITTEN.md →</span>
-      </a>
+    <div class="prd-section-title">2. Templates to register (all phases) — WA + SMS at every step</div>
+    <p class="prd-intro">For each timing, register one WhatsApp (Meta) template + one SMS (TRAI DLT PDAIUP-S) template. All links use <code>{link}</code> (WA) and <code>{#var#}</code> (SMS).</p>
+    <table class="prd-table">
+      <thead>
+        <tr><th class="col-flow">Flow</th><th>Touchpoints (each = WA + SMS)</th><th>WA</th><th>SMS</th><th>Total</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="col-flow">Payment Failure</td><td>Instant, +1h, +24h</td><td>3</td><td>3</td><td>6</td></tr>
+        <tr><td class="col-flow">Payment Success</td><td>Instant, Day 3, Day 7</td><td>3</td><td>3</td><td>6</td></tr>
+        <tr><td class="col-flow">Subscription Expiry</td><td>-2d, -1d, instant (expiry), +24h, +48h</td><td>5</td><td>5</td><td>10</td></tr>
+        <tr><td class="col-flow">Cancellation Recovery</td><td>+4h, +24h, +48h</td><td>3</td><td>3</td><td>6</td></tr>
+        <tr><td class="col-flow">Trial Activated for 7 days</td><td>Instant (on trial activation)</td><td>1</td><td>1</td><td>2</td></tr>
+        <tr><td class="col-flow">Short-Term Win-Back</td><td>Day 7, Day 10, Day 14</td><td>3</td><td>3</td><td>6</td></tr>
+        <tr><td class="col-flow">Weekly to Annual</td><td>Day 1, Day 3, Day 6</td><td>3</td><td>3</td><td>6</td></tr>
+        <tr><td class="col-flow">Long-Term Win-Back</td><td>Monthly: Day 30, +24h, +48h. Update: update day, +24h, +48h. Final: 1 step.</td><td>7</td><td>7</td><td>14</td></tr>
+        <tr><td class="col-flow">Feature Paywall (Phase 2)</td><td>+3h, +24h, +48h</td><td>3</td><td>3</td><td>6</td></tr>
+        <tr><td class="col-flow"><strong>Total (Phase 1 + Phase 2 notif)</strong></td><td>—</td><td><strong>31</strong></td><td><strong>31</strong></td><td><strong>62</strong></td></tr>
+      </tbody>
+    </table>
+
+    <div class="prd-phase-head">3. PRD tickets (inline — all on this page)</div>
+
+    <div class="ticket-block">
+      <div class="ticket-meta">Phase 1 · 4 — Trial Activated for 7 days</div>
+      <div class="ticket-label">Title</div>
+      <div class="ticket-title">Trial Activated for 7 days — Register templates, CleverTap journey, trigger on trial activation (first app download)</div>
+      <div class="ticket-label">Description</div>
+      <div class="ticket-desc">1) Template registration (priority 5): Register one Trial Activated template per channel (1 WA + 1 SMS = 2 templates). WhatsApp (Meta utility): 1 template, link = {link}. SMS (TRAI DLT Service Implicit): 1 template, variable = {#var#}.
+
+2) Backend and trigger: When a user downloads the app for the first time and the 7-day trial is activated, emit trial_activated. Send user identity and event to CleverTap so this journey triggers once per user.
+
+3) CleverTap journey: Trigger trial_activated. Steps: send WA + SMS instant (one message only). Use approved templates; respect opt-out/DND.</div>
+      <div class="ticket-label">Acceptance</div>
+      <div class="ticket-accept">Trial Activated WA and SMS templates submitted and approved (Meta Utility, DLT Service Implicit). On trial_activated, user receives one WA + one SMS with the "we will teach you how to use the app for UPSC" messaging. No further templates in this flow; post-trial engagement uses other flows.</div>
+    </div>
+
+    <div class="ticket-block">
+      <div class="ticket-meta">Phase 1 · P0-1</div>
+      <div class="ticket-title">[P0] Payment Failure — Register templates, CleverTap journey, event ingestion and delivery</div>
+      <div class="ticket-desc">WA + SMS at instant, +1h, +24h. Trigger: payment_failed_screen_shown or gateway failure. Exit on payment success.</div>
+    </div>
+    <div class="ticket-block">
+      <div class="ticket-meta">Phase 1 · 1</div>
+      <div class="ticket-title">Payment Success — Register templates, CleverTap journey, dual message (WA + SMS instant) and Day 3 / Day 7</div>
+      <div class="ticket-desc">Trigger: subscription_activated. Steps: WA + SMS instant; then Day 3, Day 7. Emit subscription_activated with duration.</div>
+    </div>
+    <div class="ticket-block">
+      <div class="ticket-meta">Phase 1 · 2</div>
+      <div class="ticket-title">Subscription Expiry — Register templates, CleverTap journey, pre- and post-expiry sequence</div>
+      <div class="ticket-desc">Trigger: subscription_ended. WA -2d, SMS -1d, WA instant, SMS +24h, WA +48h. Backend must emit subscription_ended with end date.</div>
+    </div>
+    <div class="ticket-block">
+      <div class="ticket-meta">Phase 1 · 3</div>
+      <div class="ticket-title">Cancellation Recovery — Register templates, CleverTap journey, trigger on cancel or checkout drop-off</div>
+      <div class="ticket-desc">Trigger: subscription_cancelled or checkout_drop_off (no success within 4h). WA +4h, SMS +24h, WA +48h.</div>
+    </div>
+    <div class="ticket-block">
+      <div class="ticket-meta">Phase 1 · 5</div>
+      <div class="ticket-title">Short-Term Win-Back — Register templates, CleverTap journey, trigger on 7-day inactivity</div>
+      <div class="ticket-desc">Trigger: last_activity 7 days ago. WA Day 7, SMS Day 10, WA Day 14. User property last_activity from app_open.</div>
+    </div>
+    <div class="ticket-block">
+      <div class="ticket-meta">Phase 1 · 6</div>
+      <div class="ticket-title">Weekly to Annual — Register templates, CleverTap journey, 3 messages in first 7 days for weekly subscribers</div>
+      <div class="ticket-desc">Trigger: subscription_activated with duration = weekly. WA Day 1, SMS Day 3, WA Day 6. Exit when user upgrades to annual.</div>
+    </div>
+    <div class="ticket-block">
+      <div class="ticket-meta">Phase 1 · 7</div>
+      <div class="ticket-title">Long-Term Win-Back — Register templates, CleverTap journeys (Monthly, App Update, Final)</div>
+      <div class="ticket-desc">Monthly: last_activity 30d → WA Day 30, SMS +24h, WA +48h. App update: WA update day, SMS +24h, WA +48h. Final: 180+ days inactive, single WA.</div>
+    </div>
+    <div class="ticket-block">
+      <div class="ticket-meta">Phase 1 · 8–10</div>
+      <div class="ticket-title">Web landing and checkout (PhonePe only); Subscription API and link resolution; Opt-out and conversion tracking</div>
+      <div class="ticket-desc">Web: landing, OTP auth, PhonePe checkout, success/failure pages, CleverTap triggers. API: Premium sync, {link} resolution. Opt-out: STOP/KEEP, DND, flow-level metrics.</div>
+    </div>
+    <div class="ticket-block">
+      <div class="ticket-meta">Phase 2</div>
+      <div class="ticket-title">Feature Paywall Abandonment + Product paywalls (News MCQ, PYQ verify, AI blur, Mock results)</div>
+      <div class="ticket-desc">Trigger: feature_paywall_abandoned with feature. WA +3h, SMS +24h, WA +48h. Build 4 in-app paywalls; shared modal, event tracker, gating.</div>
     </div>
   </div>
 
@@ -367,24 +452,42 @@
     <h2>Journey</h2>
     <p class="subtitle">High-level flow overview</p>
     <div class="placeholder-box">
-      The implementation roadmap (Phases 1 and 2) and the event-to-flow table above describe the full journey. For detailed journey steps, triggers, and template copy, see the full PRD: <a href="PADHAI_PRD_TICKETS_REWRITTEN.md">PADHAI_PRD_TICKETS_REWRITTEN.md</a>.
+      The implementation roadmap (Phases 1 and 2) at the top of this page and the event-to-flow table in <strong>PRD for Devs</strong> above describe the full journey. All content is on this page — scroll to Phases or PRD for Devs for triggers, schedules, and ticket details.
     </div>
   </div>
 
   <div class="msg-section anchor-section" id="msgDirectory">
     <h2>Message Directory</h2>
-    <p class="subtitle">All WA and SMS templates by flow and timing</p>
-    <div class="placeholder-box">
-      The complete message directory (flow, channel, timing, body copy, and template names) is in the PRD doc. Open <a href="PADHAI_PRD_TICKETS_REWRITTEN.md">PADHAI_PRD_TICKETS_REWRITTEN.md</a> and use the template tables in each Phase 1 · N section.
-    </div>
+    <p class="subtitle">All WA and SMS templates by flow and timing (summary on this page)</p>
+    <p class="prd-intro">Each flow has one WA + one SMS per touchpoint. Template counts and touchpoints are in the table below. Full template names and copy are in the Template Library section and in the PRD tickets above.</p>
+    <table class="prd-table">
+      <thead>
+        <tr><th class="col-flow">Flow</th><th>Touchpoints</th><th>WA templates</th><th>SMS templates</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="col-flow">Payment Failure</td><td>Instant, +1h, +24h</td><td>3</td><td>3</td></tr>
+        <tr><td class="col-flow">Payment Success</td><td>Instant, Day 3, Day 7</td><td>3</td><td>3</td></tr>
+        <tr><td class="col-flow">Subscription Expiry</td><td>-2d, -1d, instant, +24h, +48h</td><td>5</td><td>5</td></tr>
+        <tr><td class="col-flow">Cancellation Recovery</td><td>+4h, +24h, +48h</td><td>3</td><td>3</td></tr>
+        <tr><td class="col-flow">Trial Activated for 7 days</td><td>Instant</td><td>1</td><td>1</td></tr>
+        <tr><td class="col-flow">Short-Term Win-Back</td><td>Day 7, Day 10, Day 14</td><td>3</td><td>3</td></tr>
+        <tr><td class="col-flow">Weekly to Annual</td><td>Day 1, Day 3, Day 6</td><td>3</td><td>3</td></tr>
+        <tr><td class="col-flow">Long-Term Win-Back</td><td>Monthly / Update / Final</td><td>7</td><td>7</td></tr>
+        <tr><td class="col-flow">Feature Paywall (Phase 2)</td><td>+3h, +24h, +48h</td><td>3</td><td>3</td></tr>
+      </tbody>
+    </table>
   </div>
 
   <div class="msg-section anchor-section" id="templateLibrary">
     <h2>Template Library</h2>
-    <p class="subtitle">Approved copy for DLT and Meta</p>
-    <div class="placeholder-box">
-      Full template copy (WhatsApp and SMS) for each flow is in the PRD. See <a href="PADHAI_PRD_TICKETS_REWRITTEN.md">PADHAI_PRD_TICKETS_REWRITTEN.md</a> for names, messaging, and registration details (Meta Utility, TRAI DLT Service Implicit).
+    <p class="subtitle">Approved copy for DLT and Meta (inline on this page)</p>
+    <p class="prd-intro">Example: Trial Activated for 7 days. Other flows follow the same pattern (Meta Utility for WA, TRAI DLT Service Implicit PDAIUP-S for SMS). Variable: WA = <code>{link}</code>, SMS = <code>{#var#}</code>.</p>
+    <div class="phase-card" style="margin-bottom:16px;">
+      <div class="phase-card-title">trial_activated_7days — Instant on trial_activated</div>
+      <div class="tpl-inline"><strong>WhatsApp (Meta Utility):</strong> Your 7-day trial of PadhAI Pro is active. We will teach you how to use the app for UPSC in the next few days. Click the link below to open the app and get started. <strong>Button:</strong> Open app → {link}</div>
+      <div class="tpl-inline" style="margin-top:12px;"><strong>SMS (TRAI DLT Service Implicit, PDAIUP-S):</strong> Your 7-day trial of PadhAI Pro is active. We will teach you how to use the app for UPSC in the next few days. Click the link to open the app and get started. {#var#}</div>
     </div>
+    <p class="prd-intro">All other flows (Payment Failure, Success, Expiry, Cancellation, Win-Back, Weekly to Annual, Feature Paywall): register one WA + one SMS per touchpoint with the same variable rules. Full copy for each flow is in the repository; this page shows the structure and Trial Activated example. Use the PRD tickets above on this page for registration order and CleverTap journey steps.</p>
   </div>
 
   <script>
