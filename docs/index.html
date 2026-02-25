@@ -3,22 +3,421 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>PadhAI Journey — PRD &amp; Docs</title>
+  <title>PadhAI UPSC — User Journey to Premium</title>
   <style>
-    body { font-family: system-ui, sans-serif; max-width: 720px; margin: 2rem auto; padding: 0 1rem; line-height: 1.5; }
-    h1 { font-size: 1.5rem; }
-    ul { list-style: none; padding: 0; }
-    li { margin: 0.75rem 0; }
-    a { color: #0969da; text-decoration: none; }
-    a:hover { text-decoration: underline; }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: #0f0f1a;
+      color: #e0e0e0;
+      min-height: 100vh;
+    }
+    header {
+      text-align: center;
+      padding: 32px 20px 12px;
+      border-bottom: 1px solid #2a2a3d;
+    }
+    header h1 { font-size: 24px; color: #fff; font-weight: 700; }
+    header p { font-size: 13px; color: #888; margin-top: 6px; }
+    .main-nav {
+      display: flex;
+      justify-content: center;
+      gap: 4px;
+      padding: 12px 20px;
+      background: #1a1a2e;
+      border-bottom: 1px solid #2a2a3d;
+      position: sticky;
+      top: 0;
+      z-index: 200;
+      flex-wrap: wrap;
+    }
+    .nav-link {
+      color: #aaa;
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 500;
+      padding: 8px 16px;
+      border-radius: 8px;
+      transition: all 0.2s;
+    }
+    .nav-link:hover { color: #fff; background: #2a2a3d; }
+    .nav-link.active { color: #6c5ce7; font-weight: 600; }
+    section.anchor-section { scroll-margin-top: 120px; }
+    .msg-section {
+      border-top: 2px solid #2a2a3d;
+      margin-top: 20px;
+      padding: 40px 20px 60px;
+      max-width: 1200px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .msg-section h2 {
+      text-align: center;
+      font-size: 22px;
+      color: #fff;
+      margin-bottom: 6px;
+    }
+    .msg-section .subtitle {
+      text-align: center;
+      font-size: 13px;
+      color: #888;
+      margin-bottom: 28px;
+    }
+    .phase-timeline { padding: 10px 0 30px; overflow-x: auto; }
+    .phase-track {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0;
+      min-width: 600px;
+    }
+    .phase-node {
+      text-align: center;
+      padding: 16px 24px;
+      border-radius: 12px;
+      border: 2px solid #2a2a3d;
+      background: #141425;
+      transition: all 0.2s;
+      min-width: 180px;
+    }
+    .phase-node:hover { border-color: #555; }
+    .phase-node.phase-active { border-color: #6c5ce7; background: #1a1a35; }
+    .phase-number {
+      width: 32px; height: 32px;
+      border-radius: 50%;
+      background: #2a2a3d;
+      color: #888;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+    .phase-active .phase-number { background: #6c5ce7; color: #fff; }
+    .phase-label { font-size: 14px; font-weight: 600; color: #fff; }
+    .phase-sub { font-size: 11px; color: #666; margin-top: 4px; }
+    .phase-connector {
+      width: 60px;
+      height: 2px;
+      background: #2a2a3d;
+      flex-shrink: 0;
+    }
+    .phase-detail { display: none; }
+    .phase-detail.active { display: block; }
+    .phase-header-card {
+      background: #1a1a2e;
+      border: 1px solid #2a2a3d;
+      border-radius: 10px;
+      padding: 20px 24px;
+      margin-bottom: 20px;
+    }
+    .phase-title { font-size: 18px; font-weight: 700; color: #fff; margin-bottom: 8px; }
+    .phase-desc { font-size: 13px; color: #999; line-height: 1.7; }
+    .phase-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+    @media (max-width: 768px) {
+      .phase-grid { grid-template-columns: 1fr; }
+      .phase-track { min-width: 500px; }
+      .phase-node { min-width: 140px; padding: 12px 16px; }
+    }
+    .phase-card {
+      background: #141425;
+      border: 1px solid #2a2a3d;
+      border-radius: 10px;
+      padding: 18px 20px;
+    }
+    .phase-card-title {
+      font-size: 13px;
+      font-weight: 600;
+      color: #fff;
+      margin-bottom: 14px;
+    }
+    .phase-card-list { display: flex; flex-direction: column; gap: 12px; }
+    .phase-item {
+      font-size: 12.5px;
+      color: #999;
+      line-height: 1.6;
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+    }
+    .phase-item strong { color: #e0e0e0; }
+    .phase-item em { color: #fdcb6e; font-style: normal; }
+    .pi-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      flex-shrink: 0;
+      margin-top: 6px;
+    }
+    .pi-num {
+      width: 20px; height: 20px;
+      border-radius: 50%;
+      background: #2a2a3d;
+      color: #ccc;
+      font-size: 10px;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    .phase-chart-wrap {
+      background: #141425;
+      border: 1px solid #2a2a3d;
+      border-radius: 10px;
+      padding: 18px 20px;
+      overflow: auto;
+    }
+    .phase-chart-wrap pre {
+      font-size: 11px;
+      color: #aaa;
+      line-height: 1.5;
+      margin: 0;
+      white-space: pre-wrap;
+    }
+    .prd-phase-head { font-size: 16px; font-weight: 700; color: #fff; margin: 24px 0 12px; padding-bottom: 6px; border-bottom: 1px solid #2a2a3d; }
+    .prd-phase-head:first-of-type { margin-top: 0; }
+    .prd-intro { max-width: 720px; color: #aaa; font-size: 13px; line-height: 1.6; margin-bottom: 24px; }
+    .prd-section-title { font-size: 14px; font-weight: 700; color: #ccc; text-transform: uppercase; letter-spacing: 0.5px; margin: 28px 0 12px; }
+    .prd-table { width: 100%; border-collapse: collapse; font-size: 12px; margin-bottom: 24px; background: #16162a; border: 1px solid #2a2a3d; border-radius: 8px; overflow: hidden; }
+    .prd-table th { text-align: left; padding: 12px 14px; background: #1e1e35; color: #888; font-weight: 600; border-bottom: 1px solid #2a2a3d; }
+    .prd-table td { padding: 12px 14px; border-bottom: 1px solid #2a2a3d; color: #b0b0b0; vertical-align: top; }
+    .prd-table tr:last-child td { border-bottom: none; }
+    .prd-table .col-flow { width: 22%; color: #e0e0e0; font-weight: 600; }
+    .prd-table .col-trigger { width: 38%; }
+    .prd-table .col-schedule { width: 40%; color: #a0a0a0; }
+    .prd-events-list { list-style: none; font-size: 12px; color: #b0b0b0; line-height: 1.8; margin-bottom: 24px; padding: 0; }
+    .prd-events-list li { padding: 4px 0; border-bottom: 1px solid #252538; }
+    .prd-events-list li:last-child { border-bottom: none; }
+    .prd-events-list code { background: #2a2a3d; padding: 2px 6px; border-radius: 4px; color: #fdcb6e; }
+    .doc-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 16px;
+      margin-top: 24px;
+    }
+    .doc-card {
+      display: block;
+      background: #1a1a2e;
+      border: 1px solid #2a2a3d;
+      border-radius: 12px;
+      padding: 20px 24px;
+      color: inherit;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+    .doc-card:hover { border-color: #6c5ce7; background: #1e1e38; }
+    .doc-card h3 { font-size: 16px; color: #fff; margin-bottom: 8px; }
+    .doc-card p { font-size: 13px; color: #888; line-height: 1.5; }
+    .doc-card .doc-link { font-size: 12px; color: #6c5ce7; margin-top: 8px; display: inline-block; }
+    .placeholder-box {
+      background: #141425;
+      border: 1px solid #2a2a3d;
+      border-radius: 10px;
+      padding: 24px;
+      margin-top: 16px;
+      font-size: 13px;
+      color: #888;
+      line-height: 1.6;
+    }
+    .placeholder-box a { color: #6c5ce7; text-decoration: none; }
+    .placeholder-box a:hover { text-decoration: underline; }
   </style>
 </head>
 <body>
-  <h1>PadhAI Journey — PRD &amp; Docs</h1>
-  <p>Product requirements and tickets for PadhAI UPSC.</p>
-  <ul>
-    <li><a href="PADHAI_PRD_TICKETS_REWRITTEN.md">PadhAI UPSC — PRD tickets (rewritten)</a></li>
-    <li><a href="PRD_TICKETS_REWRITTEN.md">PRD tickets (rewritten)</a></li>
-  </ul>
+  <header>
+    <h1>PadhAI UPSC</h1>
+    <p>User Journey to Premium — Complete flow with recovery sequences and re-engagement notifications</p>
+  </header>
+
+  <nav class="main-nav" id="mainNav">
+    <a href="#phasesSection" class="nav-link">Phases</a>
+    <a href="#prdSection" class="nav-link">PRD for Devs</a>
+    <a href="#journeySection" class="nav-link">Journey</a>
+    <a href="#msgDirectory" class="nav-link">Message Directory</a>
+    <a href="#templateLibrary" class="nav-link">Template Library</a>
+  </nav>
+
+  <div class="msg-section" id="phasesSection" style="border-top:none;padding-top:20px;">
+    <h2>Implementation Roadmap</h2>
+    <p class="subtitle">2 phases — Phase 1: Notifications (failure P0, success, then rest) + Web payment. Phase 2: Feature Paywall Abandonment + Product paywalls.</p>
+
+    <div class="phase-timeline">
+      <div class="phase-track">
+        <div class="phase-node phase-active" data-phase="phase1">
+          <div class="phase-number">1</div>
+          <div class="phase-label">Notifications + Web Payment</div>
+          <div class="phase-sub">P0 Failure, Success, then rest. Web flow.</div>
+        </div>
+        <div class="phase-connector"></div>
+        <div class="phase-node" data-phase="phase2">
+          <div class="phase-number">2</div>
+          <div class="phase-label">Paywall Abandonment + Product</div>
+          <div class="phase-sub">Feature paywall notifications + in-app gates</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="phase-detail active" id="phase1">
+      <div class="phase-header-card" style="border-left:4px solid #6c5ce7;">
+        <div class="phase-title">Phase 1 — Notifications + Web Payment</div>
+        <div class="phase-desc">All notification flows go live first (except Feature Paywall Abandonment), in priority order: <strong style="color:#e17055;">P0 = Payment Failure</strong>, then Payment Success, then the rest. Phase 1 also includes the full web payment flow so every message can link to a working checkout.</div>
+      </div>
+
+      <div class="phase-grid">
+        <div class="phase-card">
+          <div class="phase-card-title">Notifications — Deploy Order (Feature Paywall Abandonment excluded)</div>
+          <div class="phase-card-list">
+            <div class="phase-item"><span class="pi-num">P0</span><strong>1. Payment Failure Recovery</strong><br>First priority. User already tried to pay. WA instant + SMS +1h + WA +24h. Links to web checkout.</div>
+            <div class="phase-item"><span class="pi-dot" style="background:#00b894"></span><strong>2. Payment Success</strong><br>On payment success trigger <strong>2 messages</strong>: 1 WhatsApp (instant) + 1 SMS (instant). Then WA Day 3, WA Day 7. Onboard new subscribers.</div>
+            <div class="phase-item"><span class="pi-dot" style="background:#e17055"></span><strong>3. Subscription Expiry</strong><br>WA -2d + SMS -1d + WA instant + SMS +24h + WA +48h. Prevent churn.</div>
+            <div class="phase-item"><span class="pi-dot" style="background:#fdcb6e"></span><strong>4. Cancellation Recovery</strong><br>WA +4h + SMS +24h + WA +48h. Convert checkout drop-offs.</div>
+            <div class="phase-item"><span class="pi-dot" style="background:#00b894"></span><strong>5. Trial Activated for 7 days</strong><br>One WA + one SMS instant when trial is activated on first app download. Teach users how to use the app for UPSC. Post-trial engagement handled by other flows.</div>
+            <div class="phase-item"><span class="pi-dot" style="background:#a29bfe"></span><strong>6. Short-Term Win-Back</strong><br>WA Day 7 + SMS Day 10 + WA Day 14. Re-engage 7–14 day inactive.</div>
+            <div class="phase-item"><span class="pi-dot" style="background:#636e72"></span><strong>7. Weekly to Annual Upsell</strong><br>3 messages within first 7 days: Day 1 (WA), Day 3 (SMS), Day 6 (WA). Optimize LTV.</div>
+            <div class="phase-item"><span class="pi-dot" style="background:#636e72"></span><strong>8. Long-Term Win-Back</strong><br>Monthly, app update, final (180+ days). Re-engage 30+ day dormant.</div>
+            <div class="phase-item" style="color:#666;"><span class="pi-num">—</span><strong>Not in Phase 1:</strong> Feature Paywall Abandonment (moves to Phase 2 with product paywalls).</div>
+          </div>
+        </div>
+        <div class="phase-card">
+          <div class="phase-card-title">Infrastructure + Web Payment (Phase 1)</div>
+          <div class="phase-card-list">
+            <div class="phase-item"><span class="pi-num">1</span><strong>WhatsApp Business API</strong><br>Register and get approval for all Phase 1 utility templates (payment success/failure, expiry, cancellation, trial activated, win-back, upsell).</div>
+            <div class="phase-item"><span class="pi-num">2</span><strong>TRAI DLT + SMS Gateway</strong><br>Register all SMS templates (PDAIUP-S Service Implicit) with the DLT platform.</div>
+            <div class="phase-item"><span class="pi-num">3</span><strong>Event Triggers + Message Queue</strong><br>Backend events (payment fail, expiry, cancel, trial_activated, inactivity). Scheduler for +1h, +24h, +48h, etc. Auto-cancel on user action.</div>
+            <div class="phase-item"><span class="pi-num">4</span><strong>Web Landing + Checkout</strong><br>PadhAI Pro landing page, plan selection, PhonePe payment gateway only on web. Phone OTP auth.</div>
+            <div class="phase-item"><span class="pi-num">5</span><strong>Payment Success / Failure on Web</strong><br>Confirmation page + WA confirmation; retry page + auto-trigger Payment Failure Recovery. Capture success and failure events from PhonePe to trigger notifications.</div>
+            <div class="phase-item"><span class="pi-num">6</span><strong>Subscription API + Deep Links</strong><br>Activate Premium on web payment (PhonePe), sync to app. Deep link to app/store for web payers.</div>
+            <div class="phase-item"><span class="pi-num">7</span><strong>Opt-out + Analytics</strong><br>STOP/KEEP, DND. UTM and conversion tracking per channel.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="phase-chart-wrap">
+        <div class="phase-card-title" style="margin-bottom:12px;">Phase 1: Notifications (P0 Failure first) + Web Payment</div>
+        <pre>INFRA (WA + SMS + CleverTap)
+    → P0: Payment Failure Recovery (WA instant, SMS +1h, WA +24h)
+    → Payment Success (2 msgs instant, WA Day 3, Day 7)
+    → Rest: Expiry, Cancellation, Trial Activated, Short Win-Back, Upsell, Long Win-Back
+    → Web: Landing + Checkout + Auth + Success/Fail pages
+    → All links use variable {link}</pre>
+      </div>
+    </div>
+
+    <div class="phase-detail" id="phase2">
+      <div class="phase-header-card" style="border-left:4px solid #0984e3;">
+        <div class="phase-title">Phase 2 — Feature Paywall Abandonment + Product Paywalls</div>
+        <div class="phase-desc">(1) <strong>Feature Paywall Abandonment</strong> notifications — WA +3h, SMS +24h, WA +48h, feature-specific messaging for News, PYQ, AI Explain, Mock. (2) <strong>Product work</strong> — build the 4 in-app feature paywalls so abandonment can be triggered.</div>
+      </div>
+      <div class="phase-chart-wrap">
+        <div class="phase-card-title" style="margin-bottom:12px;">Phase 2: Feature Paywall Abandonment + In-App Paywalls</div>
+        <pre>Phase 1 live → Feature Paywall Abandonment (WA +3h, SMS +24h, WA +48h)
+             → Product: Build 4 paywalls (News MCQ, PYQ verify, AI blur, Mock results)
+             → Trigger: feature_paywall_abandoned with feature type</pre>
+      </div>
+    </div>
+  </div>
+
+  <div class="msg-section anchor-section" id="prdSection" style="border-top:2px solid #2a2a3d;">
+    <h2>PRD for Devs</h2>
+    <p class="prd-intro">Message automation is done in CleverTap. Events from the app and backend trigger flows; WA and SMS are sent according to the schedules below. For Linear: use the ticket Title as the issue title and the Description plus Acceptance as the issue description.</p>
+
+    <div class="prd-section-title">1. Event-to-flow reference</div>
+    <table class="prd-table">
+      <thead>
+        <tr><th class="col-flow">Flow</th><th class="col-trigger">Trigger (event or source)</th><th class="col-schedule">Schedule (WA / SMS)</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="col-flow">Payment Failure</td><td><code>payment_failed_screen_shown</code> (app) or gateway failure callback (web/app).</td><td>WA instant, SMS +1h, WA +24h. Cancel rest if user pays later.</td></tr>
+        <tr><td class="col-flow">Payment Success</td><td><code>payment_success_screen_shown</code> or gateway success. Emit <code>subscription_activated</code> with duration.</td><td>2 messages on trigger: WA instant + SMS instant. Then WA Day 3, WA Day 7.</td></tr>
+        <tr><td class="col-flow">Subscription Expiry</td><td><code>subscription_ended</code> (backend when weekly/annual ends).</td><td>WA -2d, SMS -1d, WA instant, SMS +24h, WA +48h.</td></tr>
+        <tr><td class="col-flow">Cancellation</td><td><code>subscription_cancelled</code> or checkout drop-off: no success within threshold (e.g. 4h).</td><td>WA +4h, SMS +24h, WA +48h.</td></tr>
+        <tr><td class="col-flow">Trial Activated for 7 days</td><td><code>trial_activated</code> (when user downloads app first time and 7-day trial is activated).</td><td>Instant: one WA + one SMS only. Post-trial engagement handled by other flows.</td></tr>
+        <tr><td class="col-flow">Short-Term Win-Back</td><td>No <code>app_open</code> / engagement for 7 days (use last_activity).</td><td>WA Day 7, SMS Day 10, WA Day 14.</td></tr>
+        <tr><td class="col-flow">Weekly to Annual</td><td><code>subscription_activated</code> with duration = weekly.</td><td>3 messages in first 7 days: WA Day 1, SMS Day 3, WA Day 6. Stop if user upgrades.</td></tr>
+        <tr><td class="col-flow">Long-Term Win-Back</td><td>30d inactive (Monthly), or app update day, or 180+ days (Final). Needs last_activity.</td><td>Monthly: WA Day 30, SMS +24h, WA +48h. Update: WA update day, SMS +24h, WA +48h. Final: WA only.</td></tr>
+        <tr><td class="col-flow">Feature Paywall (Phase 2)</td><td><code>feature_paywall_abandoned</code> with feature (news | pyq | ai_explain | mock).</td><td>WA +3h (feature-specific), SMS +24h, WA +48h.</td></tr>
+      </tbody>
+    </table>
+
+    <div class="prd-section-title">2. Full PRD tickets (rewritten)</div>
+    <p class="prd-intro">All Phase 1 and Phase 2 tickets with Title, Description, Acceptance, and template details are in the following docs. No external data — static content only.</p>
+    <div class="doc-cards">
+      <a href="PADHAI_PRD_TICKETS_REWRITTEN.md" class="doc-card">
+        <h3>PadhAI UPSC — PRD tickets (rewritten)</h3>
+        <p>Complete notification and paywall tickets: Payment Failure, Success, Expiry, Cancellation, <strong>Trial Activated for 7 days</strong>, Win-Back, Weekly to Annual, Long-Term Win-Back, Feature Paywall. Template names, copy, and registration order.</p>
+        <span class="doc-link">Open PADHAI_PRD_TICKETS_REWRITTEN.md →</span>
+      </a>
+      <a href="PRD_TICKETS_REWRITTEN.md" class="doc-card">
+        <h3>PRD tickets (rewritten)</h3>
+        <p>Alternate PRD ticket document. Same structure: Title, Description, Acceptance. Use for Linear or your tracker.</p>
+        <span class="doc-link">Open PRD_TICKETS_REWRITTEN.md →</span>
+      </a>
+    </div>
+  </div>
+
+  <div class="msg-section anchor-section" id="journeySection">
+    <h2>Journey</h2>
+    <p class="subtitle">High-level flow overview</p>
+    <div class="placeholder-box">
+      The implementation roadmap (Phases 1 and 2) and the event-to-flow table above describe the full journey. For detailed journey steps, triggers, and template copy, see the full PRD: <a href="PADHAI_PRD_TICKETS_REWRITTEN.md">PADHAI_PRD_TICKETS_REWRITTEN.md</a>.
+    </div>
+  </div>
+
+  <div class="msg-section anchor-section" id="msgDirectory">
+    <h2>Message Directory</h2>
+    <p class="subtitle">All WA and SMS templates by flow and timing</p>
+    <div class="placeholder-box">
+      The complete message directory (flow, channel, timing, body copy, and template names) is in the PRD doc. Open <a href="PADHAI_PRD_TICKETS_REWRITTEN.md">PADHAI_PRD_TICKETS_REWRITTEN.md</a> and use the template tables in each Phase 1 · N section.
+    </div>
+  </div>
+
+  <div class="msg-section anchor-section" id="templateLibrary">
+    <h2>Template Library</h2>
+    <p class="subtitle">Approved copy for DLT and Meta</p>
+    <div class="placeholder-box">
+      Full template copy (WhatsApp and SMS) for each flow is in the PRD. See <a href="PADHAI_PRD_TICKETS_REWRITTEN.md">PADHAI_PRD_TICKETS_REWRITTEN.md</a> for names, messaging, and registration details (Meta Utility, TRAI DLT Service Implicit).
+    </div>
+  </div>
+
+  <script>
+    (function() {
+      var sectionIds = ['phasesSection', 'prdSection', 'journeySection', 'msgDirectory', 'templateLibrary'];
+      function updateNavActive() {
+        var top = window.pageYOffset || document.documentElement.scrollTop;
+        var navHeight = 120;
+        var current = '';
+        sectionIds.forEach(function(id) {
+          var el = document.getElementById(id);
+          if (el && el.offsetTop <= top + navHeight) current = id;
+        });
+        if (!current && sectionIds.length) current = sectionIds[0];
+        document.querySelectorAll('.nav-link').forEach(function(a) {
+          var href = (a.getAttribute('href') || '').replace('#', '');
+          a.classList.toggle('active', href === current);
+        });
+      }
+      window.addEventListener('scroll', updateNavActive);
+      window.addEventListener('load', updateNavActive);
+
+      document.querySelectorAll('.phase-node').forEach(function(node) {
+        node.addEventListener('click', function() {
+          var pid = this.getAttribute('data-phase');
+          document.querySelectorAll('.phase-node').forEach(function(n) { n.classList.remove('phase-active'); });
+          document.querySelectorAll('.phase-detail').forEach(function(d) { d.classList.remove('active'); });
+          this.classList.add('phase-active');
+          var detail = document.getElementById(pid);
+          if (detail) detail.classList.add('active');
+        });
+      });
+    })();
+  </script>
 </body>
 </html>
